@@ -13,26 +13,79 @@
     <header class="col-12 bg-light text-center p-1">
         <h1>5-Day Weather Forecast</h1>
     </header>
-    <main class="containter row d-flex">
+    <main class="containter row d-flex p-1">
     <!-- div for search and history content -->
-    <div class="col col-sm-10 col-md-5 col-lg-3 m-1">
+    <div class="col col-sm-6 col-md-6 col-lg-3 mt-1">
         <!-- form for search -->
         <div class="input-group">
             <input type="text" class="form-control border-primary" placeholder="Search for a location" aria-label="Search Location" aria-describedby="Search Button">
-            <button class="btn btn-dark border-primary" type="button" id="searchbtn">Search</button>
+            <button class="btn btn-dark border-primary" type="button" id="searchBtn">Search</button>
         </div>
         <!-- list table for search history -->
         <div class="list-group mt-1">
-            <!-- sample item to generate with js (add "active" to class on click): -->
-            <a href="#" class="list-group-item list-group-item-action">Location Place Holder</a>
-            <a href="#" class="list-group-item list-group-item-action">Location Place Holder</a>
-            <a href="#" class="list-group-item list-group-item-action">Location Place Holder</a>
+            <!-- sample items to generate with js (add "active" to class on click): -->
+            <a href="#" class="list-group-item list-group-item-action border-primary">Location Place Holder</a>
+            <a href="#" class="list-group-item list-group-item-action border-primary">Location Place Holder</a>
+            <a href="#" class="list-group-item list-group-item-action border-primary">Location Place Holder</a>
         </div>
     </div>
     <!-- div for display of weather content -->
-    <div class="col col-md-7 col-lg-9">
+    <div class="col col-sm-6 col-md-6 col-lg-8">
         <!-- current weather display -->
+        <div class="border-primary text-light">
+            <h2><span id="citySpn">City</span> <span id="dateSpn">Date</span> <span id="iconSpn">Icon</span></h2>
+            <p id="mainTemp">Temp</p>
+            <p id="mainWind">Wind</p>
+            <p id="mainHumidity">Humidity</p>
+        </div>
         <!-- 5-day weather display -->
+        <div class="row d-flex m-1">
+            <div class="col col-sm-12 col-lg-2 card text-bg-light m-1" style="max-width: 18rem;">
+                <div id="dayoneDate" class="card-header">Date</div>
+                <div class="card-body">
+                    <p id="dayoneIcon">Icon</p>
+                    <p id="dayoneTemp">Temp: 70.5 F</p>
+                    <p id="dayoneWind">Wind: 5.55 MPH</p>
+                    <p id="dayoneHumidity">Humidity: 40%</p>
+                </div>
+            </div>
+            <div class="col col-sm-12 col-lg-2 card text-bg-light m-1" style="max-width: 18rem;">
+                <div id="dayoneDate" class="card-header">Date</div>
+                <div class="card-body">
+                    <p id="dayoneIcon">Icon</p>
+                    <p id="dayoneTemp">Temp: 70.5 F</p>
+                    <p id="dayoneWind">Wind: 5.55 MPH</p>
+                    <p id="dayoneHumidity">Humidity: 40%</p>
+                </div>
+            </div>
+            <div class="col col-sm-12 col-lg-2 card text-bg-light m-1" style="max-width: 18rem;">
+                <div id="dayoneDate" class="card-header">Date</div>
+                <div class="card-body">
+                    <p id="dayoneIcon">Icon</p>
+                    <p id="dayoneTemp">Temp: 70.5 F</p>
+                    <p id="dayoneWind">Wind: 5.55 MPH</p>
+                    <p id="dayoneHumidity">Humidity: 40%</p>
+                </div>
+            </div>
+            <div class="col col-sm-12 col-lg-2 card text-bg-light m-1" style="max-width: 18rem;">
+                <div id="dayoneDate" class="card-header">Date</div>
+                <div class="card-body">
+                    <p id="dayoneIcon">Icon</p>
+                    <p id="dayoneTemp">Temp: 70.5 F</p>
+                    <p id="dayoneWind">Wind: 5.55 MPH</p>
+                    <p id="dayoneHumidity">Humidity: 40%</p>
+                </div>
+            </div>
+            <div class="col col-sm-12 col-lg-2 card text-bg-light m-1" style="max-width: 18rem;">
+                <div id="dayoneDate" class="card-header">Date</div>
+                <div class="card-body">
+                    <p id="dayoneIcon">Icon</p>
+                    <p id="dayoneTemp">Temp: 70.5 F</p>
+                    <p id="dayoneWind">Wind: 5.55 MPH</p>
+                    <p id="dayoneHumidity">Humidity: 40%</p>
+                </div>
+            </div>
+        </div>
     </div>
     </main>
     <script src="assets/js/script.js"></script>
