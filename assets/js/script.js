@@ -3,10 +3,23 @@
 
 // API Key:
 'd23ec0eb90d1adce584ccb0e923708e9'
+var searchButton = document.querySelector("#searchBtn");
+var searchText = document.querySelector("#searchTxt");
 
 
-// Receive location from form
-// Handle location type (coords, zip, name)
+var searchAPI = function (event) {
+    // Receive location from form
+    var searchLocation = searchText.value;
+    // Handle location type (coords, zip, name)
+    if (!searchLocation) {
+        window.alert('Please enter a location to search.');
+    } else {
+        console.log(searchLocation);
+    }
+}
+
+searchButton.addEventListener('click', searchAPI);
+
 // insert location into api call
 // return results from api call and store in local storage
 // disply search results from local storage in dynamic list of buttons
