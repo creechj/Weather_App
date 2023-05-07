@@ -9,6 +9,9 @@ var searchButton = document.querySelector("#searchBtn");
 var searchText = document.querySelector("#searchTxt");
 var locHistory = document.querySelector("#locHistory");
 var locHistoryitems = document.querySelectorAll("a");
+var citySpan = document.querySelector('#citySpn');
+var dateSpan = document.querySelector('#dateSpn');
+var iconSpan = document.querySelector('#iconSpn');
 
 // retrieves weather data using location's coordinates from local storage
 var loadWeather = function(event) {
@@ -19,11 +22,26 @@ var loadWeather = function(event) {
     locCoords = JSON.parse(localStorage.getItem('locCoords'));
     var latitude = locCoords[locIndex].latitude;
     var longitude = locCoords[locIndex].longitude;
-    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + apiKey;
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&units=imperial&appid=' + apiKey;
     fetch(apiUrl)
         .then(function (response) {
             response.json().then(function(data){
                 console.log(data);
+                var city = data.city.name;
+                citySpan.innerHTML = city;
+                // need to fix date formats
+                var mainDate = Date(data.list[0].dt*1000);
+                dateSpan.innerHTML = mainDate;
+                var mainIcon = data.list[0].weather[0].icon;
+                var iconUrl = 'https://openweathermap.org/img/wn/' + mainIcon + '@2x.png';
+                iconSpan.innerHTML = "<img src=" + iconUrl + ">";
+                var mainTemp = 'Temp: ' + data.list[0].main.temp;
+                var mainWind = 'Wind: ' + data.list[0].wind.speed + ' MPH';
+                var mainHumidity = 'Humidity: ' + data.list[0].main.humidity + '%';
+                document.querySelector('#mainTemp').innerHTML = mainTemp
+                document.querySelector('#mainHumidity').innerHTML = mainHumidity
+                document.querySelector('#mainWind').innerHTML = mainWind
+                console.log(city);
             })
         })
 };
