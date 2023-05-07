@@ -7,6 +7,33 @@ var apiKey = 'd23ec0eb90d1adce584ccb0e923708e9'
 // querySelectors for HTML variables
 var searchButton = document.querySelector("#searchBtn");
 var searchText = document.querySelector("#searchTxt");
+var locHistory = document.querySelector("#locHistory");
+
+var latitude = '';
+var longitude = '';
+
+// generates history of locations to be selected
+// get local storage array - loop through index and create element per location name
+var genHistory = function (locCoords) {
+    // locHistory.appendChild()
+}
+
+// stores location coordinates in local storage
+var storeLocation = function (data) {
+    var newLocation = {
+        'location': data[0].name,
+        'latitude': data[0].lat,
+        'longitude': data[0].lon
+    };
+    if (JSON.parse(localStorage.getItem('locCoords')) == null) { 
+        locCoords = [];
+    } else {
+        locCoords = JSON.parse(localStorage.getItem('locCoords'));
+    }
+    locCoords.push(newLocation);
+    localStorage.setItem('locCoords', JSON.stringify(locCoords));
+    console.log(locCoords);
+};
 
 // uses search form to retrieve API data
 var searchAPI = function (event) {
@@ -17,8 +44,6 @@ var searchAPI = function (event) {
         window.alert('Please enter a location to search.');
     } else {
         console.log(searchLocation);
-        // var locLat = '42.6529'
-        // var locLon = '-73.7567'
         var geoapiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchLocation + '&appid=' + apiKey
         
         fetch(geoapiUrl)
@@ -26,18 +51,21 @@ var searchAPI = function (event) {
                 if (response.ok) {
                     response.json().then(function(data) {
                         console.log('API Call Successful');
-                        console.log(data[0].lat, data[0].lon);
+                        console.log(data);
+                        storeLocation(data);
                     })
                 } else {
                     alert('Sorry, could not find information for this location.')
                 }
-            })
+            });
         
         searchText.value = ''
     }
 };
 
 searchButton.addEventListener('click', searchAPI);
+
+// var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + apiKey
 
 // insert location into api call
 // return results from api call and store in local storage
