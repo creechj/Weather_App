@@ -12,11 +12,7 @@ var locHistory = document.querySelector("#locHistory");
 var latitude = '';
 var longitude = '';
 
-// generates history of locations to be selected
-// get local storage array - loop through index and create element per location name
-var genHistory = function (locCoords) {
-    // locHistory.appendChild()
-}
+
 
 // stores location coordinates in local storage
 var storeLocation = function (data) {
@@ -63,9 +59,37 @@ var searchAPI = function (event) {
     }
 };
 
+// retrieves weather data using location's coordinates from local storage
+var loadWeather = function() {
+    console.log("Loading. . .");
+    // var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + apiKey
+}
+
+
+// generates history of locations to be selected
+// get local storage array - loop through index and create element per location name
+var genHistory = function () {
+    var locationList = []
+    if (JSON.parse(localStorage.getItem('locCoords')) == null) {
+        return;
+    } else {
+        locationList = JSON.parse(localStorage.getItem('locCoords'));
+        for (i=0; i < locationList.length; i++) {
+            console.log(locationList[i]);
+            var locText = locationList[i].location;
+            var locItem = document.createElement('a');
+            locHistory.appendChild(locItem);
+            locItem.innerHTML = locText;
+            locItem.setAttribute('class', 'list-group-item list-group-item-action border-primary');
+            locItem.setAttribute('value', locationList.indexOf(locationList[i]));
+            locItem.setAttribute('href', 'javascript:loadWeather();');
+        };
+    }
+};
+
+genHistory();
 searchButton.addEventListener('click', searchAPI);
 
-// var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + apiKey
 
 // insert location into api call
 // return results from api call and store in local storage
