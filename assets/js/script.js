@@ -2,11 +2,13 @@
 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}'
 
 // API Key:
-'d23ec0eb90d1adce584ccb0e923708e9'
+var apiKey = 'd23ec0eb90d1adce584ccb0e923708e9'
+
+// querySelectors for HTML variables
 var searchButton = document.querySelector("#searchBtn");
 var searchText = document.querySelector("#searchTxt");
 
-
+// uses search form to retrieve API data
 var searchAPI = function (event) {
     // Receive location from form
     var searchLocation = searchText.value;
@@ -15,8 +17,25 @@ var searchAPI = function (event) {
         window.alert('Please enter a location to search.');
     } else {
         console.log(searchLocation);
+        // var locLat = '42.6529'
+        // var locLon = '-73.7567'
+        var geoapiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchLocation + '&appid=' + apiKey
+        
+        fetch(geoapiUrl)
+            .then(function(response) {
+                if (response.ok) {
+                    response.json().then(function(data) {
+                        console.log('API Call Successful');
+                        console.log(data[0].lat, data[0].lon);
+                    })
+                } else {
+                    alert('Sorry, could not find information for this location.')
+                }
+            })
+        
+        searchText.value = ''
     }
-}
+};
 
 searchButton.addEventListener('click', searchAPI);
 
