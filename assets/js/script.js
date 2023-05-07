@@ -49,6 +49,8 @@ var searchAPI = function (event) {
                         console.log('API Call Successful');
                         console.log(data);
                         storeLocation(data);
+                        locHistory.innerHTML = '';
+                        genHistory();
                     })
                 } else {
                     alert('Sorry, could not find information for this location.')
@@ -69,11 +71,10 @@ var loadWeather = function() {
 // generates history of locations to be selected
 // get local storage array - loop through index and create element per location name
 var genHistory = function () {
-    var locationList = []
     if (JSON.parse(localStorage.getItem('locCoords')) == null) {
         return;
     } else {
-        locationList = JSON.parse(localStorage.getItem('locCoords'));
+        var locationList = JSON.parse(localStorage.getItem('locCoords'));
         for (i=0; i < locationList.length; i++) {
             console.log(locationList[i]);
             var locText = locationList[i].location;
@@ -82,14 +83,14 @@ var genHistory = function () {
             locItem.innerHTML = locText;
             locItem.setAttribute('class', 'list-group-item list-group-item-action border-primary');
             locItem.setAttribute('value', locationList.indexOf(locationList[i]));
-            locItem.setAttribute('href', 'javascript:loadWeather();');
+            locItem.setAttribute('href', 'javascript:loadWeather();');   
         };
     }
 };
 
-genHistory();
-searchButton.addEventListener('click', searchAPI);
 
+searchButton.addEventListener('click', searchAPI);
+genHistory();
 
 // insert location into api call
 // return results from api call and store in local storage
