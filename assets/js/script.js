@@ -8,11 +8,25 @@ var apiKey = 'd23ec0eb90d1adce584ccb0e923708e9'
 var searchButton = document.querySelector("#searchBtn");
 var searchText = document.querySelector("#searchTxt");
 var locHistory = document.querySelector("#locHistory");
+var locHistoryitems = document.querySelectorAll("a");
 
-var latitude = '';
-var longitude = '';
-
-
+// retrieves weather data using location's coordinates from local storage
+var loadWeather = function(event) {
+    // need to clear 'active' from other elements
+    var highlightLoc = this.getAttribute('class');
+    this.setAttribute('class', highlightLoc + ' active');
+    var locIndex = this.getAttribute('value');
+    locCoords = JSON.parse(localStorage.getItem('locCoords'));
+    var latitude = locCoords[locIndex].latitude;
+    var longitude = locCoords[locIndex].longitude;
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + apiKey;
+    fetch(apiUrl)
+        .then(function (response) {
+            response.json().then(function(data){
+                console.log(data);
+            })
+        })
+};
 
 // stores location coordinates in local storage
 var storeLocation = function (data) {
@@ -28,7 +42,6 @@ var storeLocation = function (data) {
     }
     locCoords.push(newLocation);
     localStorage.setItem('locCoords', JSON.stringify(locCoords));
-    console.log(locCoords);
 };
 
 // uses search form to retrieve API data
@@ -39,7 +52,6 @@ var searchAPI = function (event) {
     if (!searchLocation) {
         window.alert('Please enter a location to search.');
     } else {
-        console.log(searchLocation);
         var geoapiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchLocation + '&appid=' + apiKey
         
         fetch(geoapiUrl)
@@ -47,7 +59,6 @@ var searchAPI = function (event) {
                 if (response.ok) {
                     response.json().then(function(data) {
                         console.log('API Call Successful');
-                        console.log(data);
                         storeLocation(data);
                         locHistory.innerHTML = '';
                         genHistory();
@@ -61,13 +72,6 @@ var searchAPI = function (event) {
     }
 };
 
-// retrieves weather data using location's coordinates from local storage
-var loadWeather = function() {
-    console.log("Loading. . .");
-    // var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + apiKey
-}
-
-
 // generates history of locations to be selected
 // get local storage array - loop through index and create element per location name
 var genHistory = function () {
@@ -76,14 +80,13 @@ var genHistory = function () {
     } else {
         var locationList = JSON.parse(localStorage.getItem('locCoords'));
         for (i=0; i < locationList.length; i++) {
-            console.log(locationList[i]);
             var locText = locationList[i].location;
             var locItem = document.createElement('a');
             locHistory.appendChild(locItem);
             locItem.innerHTML = locText;
             locItem.setAttribute('class', 'list-group-item list-group-item-action border-primary');
             locItem.setAttribute('value', locationList.indexOf(locationList[i]));
-            locItem.setAttribute('href', 'javascript:loadWeather();');   
+            locItem.addEventListener('click', loadWeather);   
         };
     }
 };
