@@ -15,9 +15,6 @@ var iconSpan = document.querySelector('#iconSpn');
 
 // retrieves weather data using location's coordinates from local storage
 var loadWeather = function(event) {
-    // need to clear 'active' from other elements !!!
-    var highlightLoc = this.getAttribute('class');
-    this.setAttribute('class', highlightLoc + ' active');
     var locIndex = this.getAttribute('value');
     locCoords = JSON.parse(localStorage.getItem('locCoords'));
     var latitude = locCoords[locIndex].latitude;
@@ -26,7 +23,6 @@ var loadWeather = function(event) {
     fetch(apiUrl)
         .then(function (response) {
             response.json().then(function(data){
-                console.log(data);
                 // Current weather display
                 var city = data.city.name;
                 citySpan.innerHTML = city;
@@ -107,8 +103,6 @@ var loadWeather = function(event) {
                 document.querySelector('#dayfiveTemp').innerHTML = dayfiveTemp
                 document.querySelector('#dayfiveHumidity').innerHTML = dayfiveHumidity
                 document.querySelector('#dayfiveWind').innerHTML = dayfiveWind
-
-                console.log(city);
             })
         })
 };
@@ -121,7 +115,6 @@ var searchWeather = function(data) {
     fetch(apiUrl)
         .then(function (response) {
             response.json().then(function(data){
-                console.log(data);
                 // Current weather display
                 var city = data.city.name;
                 citySpan.innerHTML = city;
@@ -274,12 +267,3 @@ var genHistory = function () {
 
 searchButton.addEventListener('click', searchAPI);
 genHistory();
-
-// insert location into api call
-// return results from api call and store in local storage
-// disply search results from local storage in dynamic list of buttons
-// display data for selected location button from list as follows:
-//  WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
-// WHEN I view future weather conditions for that city
-// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
